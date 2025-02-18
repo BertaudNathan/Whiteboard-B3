@@ -17,8 +17,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    FormulaireHebergement *form = new FormulaireHebergement(this);
+    FormulaireConnexion *form = new FormulaireConnexion(this);
     form->show();
-    hide();
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    FormulaireHebergement *form = new FormulaireHebergement(this);
+    form->show();
+}

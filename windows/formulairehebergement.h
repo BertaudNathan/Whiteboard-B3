@@ -1,6 +1,7 @@
 #ifndef FORMULAIREHEBERGEMENT_H
 #define FORMULAIREHEBERGEMENT_H
 #include "../models/logHelper.h"
+#include "../models/serveurtcp.h"
 #include <QDialog>
 
 
@@ -21,6 +22,7 @@ private slots:
 
 private:
     Ui::FormulaireHebergement *ui;
+    ServeurTCP *server;
 };
 
 #endif // FORMULAIREHEBERGEMENT_H

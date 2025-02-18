@@ -28,9 +28,11 @@ set(PROJECT_SOURCES
     windows/formulairehebergement.ui
     models/loghelper.h
     models/loghelper.cpp
+    models/serveurtcp.h
+    models/serveurtcp.cpp
     ${TS_FILES}
 )
-
+set(CMAKE_EXE_LINKER_FLAGS "-Wl,-subsystem,console")
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Whiteboard-B3
         MANUAL_FINALIZATION

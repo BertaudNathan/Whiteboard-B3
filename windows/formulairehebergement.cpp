@@ -1,6 +1,7 @@
 #include "formulairehebergement.h"
 #include "ui_formulairehebergement.h"
 
+
 FormulaireHebergement::FormulaireHebergement(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::FormulaireHebergement)
@@ -15,6 +16,10 @@ FormulaireHebergement::~FormulaireHebergement()
 
 void FormulaireHebergement::on_buttonBox_accepted()
 {
-    LogHelper::WriteLog("click");
+    QString ip = ui->inputNomTableau->text();
+    QString password = ui->inputPasswordTableau->text();
+    LogHelper::WriteLog("IP " + ip.toStdString()+ " PORT " + password.toStdString());
+    server = new ServeurTCP(this);
+    server->startServer(8000);
 }
 

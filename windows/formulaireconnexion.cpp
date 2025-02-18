@@ -31,7 +31,6 @@ FormulaireConnexion::FormulaireConnexion(QWidget *parent)
             socket->write(password.toUtf8());
             socket->flush();
             socket->waitForBytesWritten(3000);
-            socket->close();
         } else {
             LogHelper::WriteLog("failed");
         }
