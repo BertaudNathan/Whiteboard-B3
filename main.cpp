@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "windows/formulaireconnexion.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
+    FormulaireConnexion w;
     w.show();
     return a.exec();
 }

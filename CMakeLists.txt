@@ -17,9 +17,12 @@ set(TS_FILES Whiteboard-B3_fr_FR.ts)
 
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    windows/mainwindow.cpp
+    windows/mainwindow.h
+    windows/ui/mainwindow.ui
+    windows/formulaireconnexion.cpp
+    windows/formulaireconnexion.h
+    windows/ui/formulaireconnexion.ui
     models/loghelper.h
     models/loghelper.cpp
     ${TS_FILES}

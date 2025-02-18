@@ -7,7 +7,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
-#include "models/logHelper.h"
+#include "../models/logHelper.h"
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
