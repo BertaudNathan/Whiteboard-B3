@@ -19,10 +19,13 @@ set(PROJECT_SOURCES
     main.cpp
     windows/mainwindow.cpp
     windows/mainwindow.h
-    windows/ui/mainwindow.ui
+    windows/mainwindow.ui
     windows/formulaireconnexion.cpp
     windows/formulaireconnexion.h
-    windows/ui/formulaireconnexion.ui
+    windows/formulaireconnexion.ui
+    windows/formulairehebergement.cpp
+    windows/formulairehebergement.h
+    windows/formulairehebergement.ui
     models/loghelper.h
     models/loghelper.cpp
     ${TS_FILES}

@@ -1,41 +1,24 @@
 #include "mainwindow.h"
-#include <QTcpSocket>
+#include "ui_mainwindow.h"
 
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    QWidget *centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+}
 
-    QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
 
-    QLabel *ipLabel = new QLabel("Adresse IP:", this);
-    ipInput = new QLineEdit(this);
-    QLabel *passwordLabel = new QLabel("Mot de passe:", this);
-    passwordInput = new QLineEdit(this);
-    passwordInput->setEchoMode(QLineEdit::Password);
 
-    submitButton = new QPushButton("Valider", this);
-
-    layout->addWidget(ipLabel);
-    layout->addWidget(ipInput);
-    layout->addWidget(passwordLabel);
-    layout->addWidget(passwordInput);
-    layout->addWidget(submitButton);
-
-    connect(submitButton, &QPushButton::clicked, this, [=]() {
-        QString ip = ipInput->text();
-        QString password = passwordInput->text();
-        LogHelper::WriteLog("IP " + ip.toStdString()+ " PORT " + password.toStdString());
-        QTcpSocket *socket = new QTcpSocket(this);
-        socket->connectToHost(ip, 8000);
-        if (socket->waitForConnected(3000)) {
-            socket->write(password.toUtf8());
-            socket->flush();
-            socket->waitForBytesWritten(3000);
-            socket->close();
-        } else {
-            LogHelper::WriteLog("failed");
-        }
-    });
+void MainWindow::on_pushButton_3_clicked()
+{
+    FormulaireHebergement *form = new FormulaireHebergement(this);
+    form->show();
+    hide();
 }
 

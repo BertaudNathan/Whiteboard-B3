@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FormulaireConnexion</class>
- <widget class="QDialog" name="FormulaireConnexion">
+ <class>FormulaireHebergement</class>
+ <widget class="QDialog" name="FormulaireHebergement">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -28,6 +28,31 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
    </property>
+   <property name="centerButtons">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>80</y>
+     <width>227</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="labelNomTableau">
+      <property name="text">
+       <string>Nom du tableau</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="inputNomTableau"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
@@ -35,7 +60,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>FormulaireConnexion</receiver>
+   <receiver>FormulaireHebergement</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -51,7 +76,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>FormulaireConnexion</receiver>
+   <receiver>FormulaireHebergement</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
