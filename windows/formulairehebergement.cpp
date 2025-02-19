@@ -20,6 +20,7 @@ void FormulaireHebergement::on_buttonBox_accepted()
     QString password = ui->inputPasswordTableau->text();
     LogHelper::WriteLog("IP " + ip.toStdString()+ " PORT " + password.toStdString());
     server = new ServeurTCP(this);
+    server->setPassword(password);
     server->startServer(8000);
 }
 

@@ -8,7 +8,13 @@
 #include <QVBoxLayout>
 #include <QTcpSocket>
 #include <QDialog>
+#include <QDebug>
+#include <QByteArray>
+
 #include "../models/logHelper.h"
+#include "../models/serveurtcp.h"
+#include "../models/client.h"
+#include "test.h"
 
 namespace Ui {
 class FormulaireConnexion;
@@ -22,10 +28,15 @@ public:
     explicit FormulaireConnexion(QWidget *parent = nullptr);
     ~FormulaireConnexion();
 
+    Client *getClient() const;
+    void setClient(Client *newClient);
+
+private slots:
+    void on_buttonBox_accepted();
+
 private:
-    QLineEdit *ipInput;
-    QLineEdit *passwordInput;
-    QPushButton *submitButton;
+    Ui::FormulaireConnexion *ui;
+    Client *client;
 };
 
 #endif // FORMULAIRECONNEXION_H

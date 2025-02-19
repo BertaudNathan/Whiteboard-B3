@@ -30,8 +30,17 @@ set(PROJECT_SOURCES
     models/loghelper.cpp
     models/serveurtcp.h
     models/serveurtcp.cpp
+    models/client.h
+    models/client.cpp
+    models/point.h
+    models/curseur.h
+    windows/test.cpp
+    windows/test.h
+    windows/test.ui
     ${TS_FILES}
 )
+
+include_directories(${CMAKE_SOURCE_DIR}/models)
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,-subsystem,console")
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Whiteboard-B3
@@ -86,4 +95,4 @@ install(TARGETS Whiteboard-B3
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(Whiteboard-B3)
 endif()
-include_directories(${CMAKE_SOURCE_DIR}/models)
+

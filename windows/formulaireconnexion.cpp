@@ -1,13 +1,15 @@
 #include "formulaireconnexion.h"
+#include "ui_formulaireconnexion.h"
 
 FormulaireConnexion::FormulaireConnexion(QWidget *parent)
-    : QDialog(parent)
+    : QDialog(parent)    , ui(new Ui::FormulaireConnexion)
 {
-    QWidget *centralWidget = new QWidget(this);
+    /* QWidget *centralWidget = new QWidget(this);
    //setCentralWidget(centralWidget); // QDialog does not have setCentralWidget
     QVBoxLayout *layout = new QVBoxLayout(centralWidget);
     QLabel *ipLabel = new QLabel("Adresse IP:", this);
     ipInput = new QLineEdit(this);
+    ipInput->setText("127.0.0.1");
     QLabel *passwordLabel = new QLabel("Mot de passe:", this);
     passwordInput = new QLineEdit(this);
     passwordInput->setEchoMode(QLineEdit::Password);
@@ -19,24 +21,40 @@ FormulaireConnexion::FormulaireConnexion(QWidget *parent)
     layout->addWidget(passwordLabel);
     layout->addWidget(passwordInput);
     layout->addWidget(submitButton);
-    setLayout(layout);
+    setLayout(layout); */
+    ui->setupUi(this);
 
-    connect(submitButton, &QPushButton::clicked, this, [=]() {
-        QString ip = ipInput->text();
-        QString password = passwordInput->text();
-        LogHelper::WriteLog("IP " + ip.toStdString()+ " PORT " + password.toStdString());
-        QTcpSocket *socket = new QTcpSocket(this);
-        socket->connectToHost(ip, 8000);
-        if (socket->waitForConnected(3000)) {
-            socket->write(password.toUtf8());
-            socket->flush();
-            socket->waitForBytesWritten(3000);
-        } else {
-            LogHelper::WriteLog("failed");
-        }
-    });
 }
 
 FormulaireConnexion::~FormulaireConnexion()
 {
 }
+
+void FormulaireConnexion::on_buttonBox_accepted()
+{
+    QString ip = ui->ipInput->text();
+    QString password = ui->passwordInput->text();
+    this->client = new Client(this);
+    QTcpSocket *socket = client->getSocket();
+    connect(socket, &QTcpSocket::errorOccurred, this, [this](QAbstractSocket::SocketError socketError) {
+        qDebug() << "Erreur de connexion au serveur";
+        this->client->getSocket()->close();
+    });
+    socket->connectToHost(ip, 8000);   
+    if (socket->waitForConnected(1000)) {
+        socket->write(password.toUtf8());
+        socket->flush();
+        socket->waitForBytesWritten(500);
+    } 
+}
+
+Client *FormulaireConnexion::getClient() const
+{
+    return client;
+}
+
+void FormulaireConnexion::setClient(Client *newClient)
+{
+    client = newClient;
+}
+

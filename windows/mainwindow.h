@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "formulairehebergement.h"
 #include "formulaireconnexion.h"
+#include "test.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
