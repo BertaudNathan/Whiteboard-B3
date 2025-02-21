@@ -13,6 +13,8 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS Network)
 find_package(Qt6 REQUIRED COMPONENTS Network)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 set(TS_FILES Whiteboard-B3_fr_FR.ts)
 
 set(PROJECT_SOURCES
@@ -34,9 +36,16 @@ set(PROJECT_SOURCES
     models/client.cpp
     models/point.h
     models/curseur.h
+    models/password.h
+    models/curseurwidget.h
+    models/curseurwidget.cpp
     windows/test.cpp
     windows/test.h
     windows/test.ui
+    windows/board.cpp
+    windows/board.h
+    resources.qrc
+
     ${TS_FILES}
 )
 
@@ -70,7 +79,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(Whiteboard-B3 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::Network)
+target_link_libraries(Whiteboard-B3 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::Network Qt6::Gui Qt6::Core)
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.

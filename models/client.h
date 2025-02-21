@@ -22,10 +22,12 @@ public:
     QTcpSocket *getSocket() const;
     void setSocket(QTcpSocket *newSocket);
 
+public slots:
+    void onReadyRead();
+
 private slots:
     void onConnected();
     void onDisconnected();
-    void onReadyRead();
     void onErrorOccurred(QAbstractSocket::SocketError socketError);
 
 private:

@@ -34,7 +34,8 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    
+   Board *board = new Board(this);
+   board->show(); 
 }
 
 void MainWindow::on_pushButton_2_clicked()

@@ -35,14 +35,17 @@ void ServeurTCP::broadcastPoint(const Point &p)
     quint8 type = 0x01;  // Identifiant pour Point
     stream << type << p;  // Sérialiser le Point
 
-    for (QTcpSocket *client : clientsValides) {
+    qDebug() << data;
+
+    for (QTcpSocket *client : clients) {
         if (client->state() == QAbstractSocket::ConnectedState) {
             client->write(data);
             client->flush();
+            qDebug() << "broadcast point";
         }
     }
 
-    qDebug() << "Diffusion du point à tous les clients.";
+    //qDebug() << "Diffusion du point à tous les clients.";
 }
 
 
@@ -51,16 +54,17 @@ void ServeurTCP::broadcastCurseur(const Curseur &c)
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
 
-    quint8 type = 0x01;  // Identifiant pour Point
+    quint8 type = 0x02;  // Identifiant pour Point
     stream << type << c;  // Sérialiser le Point
-
-    for (QTcpSocket *client : clientsValides) {
+    qDebug() << "broadcast curseur";
+    for (QTcpSocket *client : clients) {
+        qDebug() << client;
         if (client->state() == QAbstractSocket::ConnectedState) {
             client->write(data);
             client->flush();
         }
     }
-    qDebug() << "Diffusion du point à tous les clients.";
+    //qDebug() << "Diffusion du point à tous les clients.";
 }
 
 
@@ -109,7 +113,7 @@ void ServeurTCP::onClientReadyRead()
 {
     qDebug() << __FUNCTION__;
     QTcpSocket *clientSocket = qobject_cast<QTcpSocket *>(sender());
-    if (clientsValides.contains(clientSocket)) {
+    if (clients.contains(clientSocket)) {
         QByteArray requestData = clientSocket->readAll();
     QDataStream stream(&requestData, QIODevice::ReadOnly);
         quint8 type;
@@ -118,22 +122,25 @@ void ServeurTCP::onClientReadyRead()
         Point p;
         stream >> p;  // Désérialisation du Point
         broadcastPoint(p);
-        qDebug() << "Point reçu -> X:" << p.x << ", Y:" << p.y 
-                 << ", Couleur:" << p.couleur << ", Taille:" << p.taille;
+        //qDebug() << "Point reçu -> X:" << p.x << ", Y:" << p.y << ", Couleur:" << p.couleur << ", Taille:" << p.taille;
     } else if (type == 0x02) {
         Curseur c;
     stream >> c;  // Désérialisation du Curseur
     broadcastCurseur(c);
-    qDebug() << "Point reçu -> X:" << c.x << ", Y:" << c.y;
+    //qDebug() << "Point reçu -> X:" << c.x << ", Y:" << c.y;
     }
     } else{
-
-    
-    if (clientSocket) {
-        QString data = QString::fromUtf8(clientSocket->readAll());
-        qDebug() << data;
+        QByteArray requestData = clientSocket->readAll();
+        QDataStream stream(&requestData, QIODevice::ReadOnly);
+            quint8 type;
+            QString passwordTest;
+        stream >> type;    
+        stream >> passwordTest;
+        qDebug() << type;
+        qDebug() << passwordTest;
+    if (clientSocket && type == 0x03) {
         qDebug() << password;
-        if (data == password) {
+        if (passwordTest == password) {
             QString response = "Bienvenue !";
             sendTo(clientSocket->peerAddress().toString(),clientSocket->peerPort(), response.toUtf8());
             clientSocket->write("Bienvenue !");

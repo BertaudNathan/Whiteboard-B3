@@ -5,6 +5,7 @@
 #include "formulairehebergement.h"
 #include "formulaireconnexion.h"
 #include "test.h"
+#include "board.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
