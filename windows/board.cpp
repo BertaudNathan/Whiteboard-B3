@@ -26,12 +26,8 @@ void DrawingArea::setPenSize(int size) {
 }
 
 void DrawingArea::setClient(Client *client) {
-    qDebug() << "setClient";
     this->client = client;
     bool success = connect(client->getSocket(), &QTcpSocket::readyRead, this, &DrawingArea::incomingData);
-    qDebug() << "Connexion au signal readyRead:" << success;
-
-    qDebug() << client->getSocket();
 }
 
 Client *DrawingArea::getClient() const {
@@ -51,63 +47,61 @@ void DrawingArea::clearCanvas() {
 void DrawingArea::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         drawing = true;
-        lines.append(std::make_pair(
-            QLine(event->pos().x()-1,event->pos().y()-1 , event->pos().x(),event->pos().y() ),
-            QPen(penColor, penSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin)
-            ));
         lastPoint = event->pos();
-        Point p;
+        Curseur p;
         p.x = event->pos().x();
         p.y = event->pos().y();
         p.couleur = penColor.name();
         p.taille = penSize;
+        p.drawing = true; 
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
-        quint8 type = 0x01;
+        quint8 type = 0x02;
         stream << type;  
         stream << p;
-        qDebug() << "debug 1";
-        qDebug() << this;
+        Draw(p);
         this->getClient()->sendMessage(data);
-        update();
     }
+    qDebug() << "y";
 }
 
 void DrawingArea::incomingData() {
-    qDebug() << "incomingDraw";
     QByteArray data = this->getClient()->getSocket()->readAll();
-    qDebug() << data;
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint8 type;
     stream >> type; // Désérialisation du type de message
-    qDebug() << "type = " << type;
-    if (type == 0x01){
+    /*if (type == 0x01){
         Point p;
         stream >> p;  // Désérialisation du Point
-        qDebug() << "Point reçu -> X:" << p.x << ", Y:" << p.y << ", Couleur:" << p.couleur << ", Taille:" << p.taille;
         Draw(p);
-    } else if (type ==0x02){
+    } */
+    if (type ==0x02){
         Curseur c;
         stream >> c;  // Désérialisation du Curseur
         CurseurWidget *widget = mapIdCurseur->find(0).value();
+        if (c.drawing == true){
+            Draw(c);
+        }
         widget->move(c.x,c.y);
     }
 }
 
-void DrawingArea::Draw(Point p) {
-    qDebug() << p.x-1 << p.y-1;
+void DrawingArea::Draw(Curseur c) {
     lines.append(std::make_pair(
-            QLine(p.x-1,p.y-1 , p.x,p.y ),
-            QPen(penColor, p.taille, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin)
+            QLine(c.x-1,c.y-1 , c.x,c.y ),
+            QPen(QColor(c.couleur), c.taille, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin)
             ));
-    update();
+    QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
 
 void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
+    //qDebug() << "Mouse move";
     Curseur c;
     c.x = event->pos().x();
     c.y = event->pos().y();
     c.id = 3;
+    c.drawing = drawing;
+    c.taille = penSize;
     c.couleur = penColor.name();
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
@@ -115,14 +109,9 @@ void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
     stream << type;
     stream << c;
     this->getClient()->sendMessage(data);
-    if (drawing) {
-        lines.append(std::make_pair(
-            QLine(lastPoint, event->pos()),
-            QPen(penColor, penSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin)
-            ));
-    lastPoint = event->pos(); 
-    }
     
+    lastPoint = event->pos(); 
+
 }
 
 void DrawingArea::mouseReleaseEvent(QMouseEvent *event) {

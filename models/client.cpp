@@ -25,23 +25,16 @@ void Client::connectToServer(const QString &ip, quint16 port)
 
 void Client::sendMessage(const QByteArray &message)
 {
-    //qDebug() << this;
-    if (!this->socket) {  // Vérifier si le socket est initialisé
-        //qDebug() << "ERREUR: Socket non initialisé !";
+    if (!this->socket) {
         return;
     }
-
-    if (this->socket->state() != QAbstractSocket::ConnectedState) {  // Vérifier s'il est connecté
-        //qDebug() << "ERREUR: Socket non connecté !";
+    if (this->socket->state() != QAbstractSocket::ConnectedState) {
         return;
     }
-
-    //qDebug() << "Envoi du message...";
     qint64 bytesWritten = this->socket->write(message);
     if (bytesWritten == -1) {
         qDebug() << "ERREUR: Échec d'envoi du message !";
     } else {
-        this->socket->flush();
         //qDebug() << "Message envoyé avec succès (" << bytesWritten << " octets ):" << message;
     }
 }

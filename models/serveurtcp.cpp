@@ -35,13 +35,12 @@ void ServeurTCP::broadcastPoint(const Point &p)
     quint8 type = 0x01;  // Identifiant pour Point
     stream << type << p;  // Sérialiser le Point
 
-    qDebug() << data;
 
     for (QTcpSocket *client : clients) {
         if (client->state() == QAbstractSocket::ConnectedState) {
             client->write(data);
             client->flush();
-            qDebug() << "broadcast point";
+            qDebug() << "Diffusion du point à "<< client->peerAddress().toString()<< ":" << client->peerPort();
         }
     }
 
@@ -56,21 +55,20 @@ void ServeurTCP::broadcastCurseur(const Curseur &c)
 
     quint8 type = 0x02;  // Identifiant pour Point
     stream << type << c;  // Sérialiser le Point
-    qDebug() << "broadcast curseur";
     for (QTcpSocket *client : clients) {
-        qDebug() << client;
         if (client->state() == QAbstractSocket::ConnectedState) {
             client->write(data);
             client->flush();
+            qDebug() << "Diffusion du curseur à "<< client->peerAddress().toString()<< ":" << client->peerPort();
+
         }
     }
-    //qDebug() << "Diffusion du point à tous les clients.";
+    
 }
 
 
 bool ServeurTCP::sendTo(const QString &ip, quint16 port, const QByteArray &bytes)
 {
-    qDebug() << __FUNCTION__ << ip << port << bytes;
     QTcpSocket *socket = new QTcpSocket(this);
     socket->connectToHost(ip, port);
     if (socket->waitForConnected(3000)) {
@@ -111,7 +109,6 @@ void ServeurTCP::incomingConnection(qintptr socketDescriptor)
 
 void ServeurTCP::onClientReadyRead()
 {
-    qDebug() << __FUNCTION__;
     QTcpSocket *clientSocket = qobject_cast<QTcpSocket *>(sender());
     if (clients.contains(clientSocket)) {
         QByteArray requestData = clientSocket->readAll();
@@ -136,10 +133,7 @@ void ServeurTCP::onClientReadyRead()
             QString passwordTest;
         stream >> type;    
         stream >> passwordTest;
-        qDebug() << type;
-        qDebug() << passwordTest;
     if (clientSocket && type == 0x03) {
-        qDebug() << password;
         if (passwordTest == password) {
             QString response = "Bienvenue !";
             sendTo(clientSocket->peerAddress().toString(),clientSocket->peerPort(), response.toUtf8());
@@ -166,7 +160,6 @@ void ServeurTCP::onClientReadyRead()
 void ServeurTCP::receiveRequest(QTcpSocket *clientSocket)
 {
     QByteArray requestData = clientSocket->readAll();
-    qDebug() << "Requête reçue:" << requestData;
 
     // Exemple de réponse
     QString response = "Requête reçue et traitée";

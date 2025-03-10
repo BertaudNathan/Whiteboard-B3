@@ -22,7 +22,7 @@ public:
     void clearCanvas();
     void setClient(Client *client);
     Client *getClient() const;
-    void Draw(Point p);
+    void Draw(Curseur c);
 
 private slots:
     void incomingData();
