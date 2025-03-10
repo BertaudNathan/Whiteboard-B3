@@ -14,7 +14,16 @@ DrawingArea::DrawingArea(QWidget *parent)
     setStyleSheet("background-color: white;");
     setFixedSize(700, 500);
     setMouseTracking(true);
-    mapIdCurseur->insert(0, new CurseurWidget(this));
+    //mapIdCurseur->insert(0, new CurseurWidget(this));
+    }
+
+
+void DrawingArea::AddCursorWidget(int id) {
+    qDebug() << "ajout curseur " << id;
+    CurseurWidget *widget = new CurseurWidget(this);
+    if ( !mapIdCurseur->contains(id) ){
+        mapIdCurseur->insert(id, widget);
+    }
 }
 
 void DrawingArea::setPenColor(const QColor &color) {
@@ -49,6 +58,7 @@ void DrawingArea::mousePressEvent(QMouseEvent *event) {
         drawing = true;
         lastPoint = event->pos();
         Curseur p;
+        p.id = this->client->getId();
         p.x = event->pos().x();
         p.y = event->pos().y();
         p.couleur = penColor.name();
@@ -62,27 +72,41 @@ void DrawingArea::mousePressEvent(QMouseEvent *event) {
         Draw(p);
         this->getClient()->sendMessage(data);
     }
-    qDebug() << "y";
 }
 
 void DrawingArea::incomingData() {
     QByteArray data = this->getClient()->getSocket()->readAll();
     QDataStream stream(&data, QIODevice::ReadOnly);
+    //qDebug << "Données reçues:" << data;
     quint8 type;
     stream >> type; // Désérialisation du type de message
-    /*if (type == 0x01){
-        Point p;
-        stream >> p;  // Désérialisation du Point
-        Draw(p);
-    } */
+    qDebug() <<"type : "<< type;
     if (type ==0x02){
         Curseur c;
         stream >> c;  // Désérialisation du Curseur
-        CurseurWidget *widget = mapIdCurseur->find(0).value();
+        qDebug() << "id " << c.id;
+        qDebug() <<"taille " << mapIdCurseur->keys().size();
+        CurseurWidget *widget;
+        if (mapIdCurseur->contains(c.id)){
+            widget = mapIdCurseur->find(c.id).value();
+            widget->show();
+        }else{
+            widget = new CurseurWidget(this);
+            widget->show();
+            mapIdCurseur->insert(c.id, widget);
+        }
         if (c.drawing == true){
             Draw(c);
         }
         widget->move(c.x,c.y);
+    }
+    if (type == 0x05){
+        IdClient idC;
+        stream >> idC;
+        Client *client = this->getClient();
+        client->setId(idC.id);
+        qDebug() << "l'id est " << idC.id;
+        AddCursorWidget(idC.id);
     }
 }
 
@@ -99,7 +123,7 @@ void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
     Curseur c;
     c.x = event->pos().x();
     c.y = event->pos().y();
-    c.id = 3;
+    c.id = this->client->getId();
     c.drawing = drawing;
     c.taille = penSize;
     c.couleur = penColor.name();
@@ -131,11 +155,10 @@ void DrawingArea::paintEvent(QPaintEvent *event) {
 }
 
 
-Board::Board(QWidget *parent) : QWidget(parent) {
+Board::Board(QWidget *parent, QString ip) : QWidget(parent) {
     setWindowTitle("Whiteboard");
     setFixedSize(800, 600);
     this->client = new Client();
-    QString ip = "127.0.0.1";
     this->client->connectToServer(ip,8000);
     Password p;
     p.password = "t";

@@ -3,6 +3,7 @@
 Client::Client(QObject *parent) : QObject(parent)
 {
     this->socket = new QTcpSocket(this);
+    this->id = 0;
 
     // Connexion des signaux aux slots
     connect(this->socket, &QTcpSocket::connected, this, &Client::onConnected);
@@ -50,7 +51,7 @@ void Client::onDisconnected()
 }
 
 void Client::onReadyRead()
-{
+{ 
 }
 
 void Client::onErrorOccurred(QAbstractSocket::SocketError socketError)
@@ -66,4 +67,14 @@ QTcpSocket *Client::getSocket() const
 void Client::setSocket(QTcpSocket *newSocket)
 {
     socket = newSocket;
+}
+
+int Client::getId() const
+{
+    return id;
+}
+
+void Client::setId(int newId)
+{
+    id = newId;
 }

@@ -22,9 +22,9 @@ void MainWindow::on_pushButton_3_clicked()
     if (form->exec() == QDialog::Accepted) {
         qDebug() << "on ferme derriere";
         if (form->getClient()->getSocket()->isOpen()) {
-        test *t = new test(form->getClient(),this);
-        t->show();
-        hide();
+            Board *board = new Board(this, form->getIp());
+            board->show(); 
+            //hide();
         }
     } else {
         qDebug() << "on ferme pas";

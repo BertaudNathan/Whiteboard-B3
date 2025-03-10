@@ -1,0 +1,11 @@
+11:47:33 : IP t PORT t
+11:47:33 : Serveur démarré sur le port
+11:47:40 : Nouveau client connecté !
+11:47:41 : Nouveau client connecté !
+11:47:42 : deconnexion du client
+12:10:55 : Fermeture du serveur
+12:10:55 : deconnexion du client
+12:24:42 : IP t PORT t
+12:24:42 : Serveur démarré sur le port
+12:24:42 : Nouveau client connecté !
+12:24:47 : Nouveau client connecté !

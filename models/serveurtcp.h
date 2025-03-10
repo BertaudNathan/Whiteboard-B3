@@ -6,6 +6,7 @@
 #include <QObject>
 #include "point.h"
 #include "curseur.h"
+#include "idClient.h"
 
 class ServeurTCP : public QTcpServer
 {
@@ -38,6 +39,7 @@ private:
     bool isAdmin;
     QString password;
     int order;
+
 };
 
 #endif // SERVEURTCP_H

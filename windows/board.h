@@ -11,6 +11,8 @@
 #include "../models/point.h"
 #include "../models/password.h"
 #include "../models/curseurwidget.h"
+#include "../models/idClient.h"
+#include "../models/logHelper.h"
 
 class DrawingArea : public QWidget {
     Q_OBJECT
@@ -26,6 +28,7 @@ public:
 
 private slots:
     void incomingData();
+    void AddCursorWidget(int id);
 
 
 protected:
@@ -33,6 +36,8 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
+
+
     
 
 
@@ -56,7 +61,7 @@ class Board : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Board(QWidget *parent = nullptr);
+    explicit Board(QWidget *parent = nullptr, QString ip = nullptr);
     ~Board();
 
 private slots:

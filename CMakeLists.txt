@@ -36,6 +36,7 @@ set(PROJECT_SOURCES
     models/client.cpp
     models/point.h
     models/curseur.h
+    models/idClient.h
     models/password.h
     models/curseurwidget.h
     models/curseurwidget.cpp

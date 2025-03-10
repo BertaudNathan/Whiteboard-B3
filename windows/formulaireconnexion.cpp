@@ -32,7 +32,7 @@ FormulaireConnexion::~FormulaireConnexion()
 
 void FormulaireConnexion::on_buttonBox_accepted()
 {
-    QString ip = ui->ipInput->text();
+    this->ip = ui->ipInput->text();
     QString password = ui->passwordInput->text();
     this->client = new Client(this);
     QTcpSocket *socket = client->getSocket();
@@ -42,15 +42,20 @@ void FormulaireConnexion::on_buttonBox_accepted()
     });
     socket->connectToHost(ip, 8000);   
     if (socket->waitForConnected(1000)) {
-        socket->write(password.toUtf8());
-        socket->flush();
-        socket->waitForBytesWritten(500);
+        socket->write(password.toUtf8());   
+    } else {
+        qDebug() << "Connexion échouée";    
     } 
 }
 
 Client *FormulaireConnexion::getClient() const
 {
     return client;
+}
+
+QString FormulaireConnexion::getIp()
+{
+    return ip;
 }
 
 void FormulaireConnexion::setClient(Client *newClient)

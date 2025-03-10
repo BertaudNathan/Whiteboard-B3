@@ -15,6 +15,7 @@
 #include "../models/serveurtcp.h"
 #include "../models/client.h"
 #include "test.h"
+#include "board.h"
 
 namespace Ui {
 class FormulaireConnexion;
@@ -30,12 +31,14 @@ public:
 
     Client *getClient() const;
     void setClient(Client *newClient);
+    QString getIp();
 
 private slots:
     void on_buttonBox_accepted();
 
 private:
     Ui::FormulaireConnexion *ui;
+    QString ip;
     Client *client;
 };
 

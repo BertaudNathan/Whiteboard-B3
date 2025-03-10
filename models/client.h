@@ -7,7 +7,7 @@
 
 #include "point.h"
 #include "curseur.h"
-
+#include "idClient.h"
 class Client : public QObject
 {
     Q_OBJECT
@@ -21,6 +21,8 @@ public:
 
     QTcpSocket *getSocket() const;
     void setSocket(QTcpSocket *newSocket);
+    int getId() const;
+    void setId(int newId);
 
 public slots:
     void onReadyRead();
@@ -32,6 +34,7 @@ private slots:
 
 private:
     QTcpSocket *socket;
+    int id;
 };
 
 #endif // CLIENT_H
