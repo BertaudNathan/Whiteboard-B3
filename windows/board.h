@@ -60,14 +60,18 @@ class QPushButton;
 class Board : public QWidget {
     Q_OBJECT
 
+
+
 public:
     explicit Board(QWidget *parent = nullptr, QString ip = nullptr);
     ~Board();
+    
 
 private slots:
     void changeBrushSize(const QString &size);
     void changeColor();
     void clearBoard();
+
 
 private:
     void initializeUI();

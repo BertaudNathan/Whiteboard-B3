@@ -14,12 +14,10 @@ DrawingArea::DrawingArea(QWidget *parent)
     setStyleSheet("background-color: white;");
     setFixedSize(700, 500);
     setMouseTracking(true);
-    //mapIdCurseur->insert(0, new CurseurWidget(this));
     }
 
 
 void DrawingArea::AddCursorWidget(int id) {
-    qDebug() << "ajout curseur " << id;
     CurseurWidget *widget = new CurseurWidget(this);
     if ( !mapIdCurseur->contains(id) ){
         mapIdCurseur->insert(id, widget);
@@ -54,6 +52,7 @@ void DrawingArea::clearCanvas() {
 
 
 void DrawingArea::mousePressEvent(QMouseEvent *event) {
+    grabMouse();
     if (event->button() == Qt::LeftButton) {
         drawing = true;
         lastPoint = event->pos();
@@ -70,22 +69,23 @@ void DrawingArea::mousePressEvent(QMouseEvent *event) {
         stream << type;  
         stream << p;
         Draw(p);
+        qDebug() <<"appuye "<< drawing;
         this->getClient()->sendMessage(data);
+    } else {
+        qDebug() << "erereerfeafe";
     }
+    
 }
 
 void DrawingArea::incomingData() {
     QByteArray data = this->getClient()->getSocket()->readAll();
     QDataStream stream(&data, QIODevice::ReadOnly);
-    //qDebug << "Données reçues:" << data;
     quint8 type;
     stream >> type; // Désérialisation du type de message
-    qDebug() <<"type : "<< type;
     if (type ==0x02){
         Curseur c;
         stream >> c;  // Désérialisation du Curseur
-        qDebug() << "id " << c.id;
-        qDebug() <<"taille " << mapIdCurseur->keys().size();
+
         CurseurWidget *widget;
         if (mapIdCurseur->contains(c.id)){
             widget = mapIdCurseur->find(c.id).value();
@@ -105,7 +105,6 @@ void DrawingArea::incomingData() {
         stream >> idC;
         Client *client = this->getClient();
         client->setId(idC.id);
-        qDebug() << "l'id est " << idC.id;
         AddCursorWidget(idC.id);
     }
 }
@@ -119,7 +118,6 @@ void DrawingArea::Draw(Curseur c) {
 }
 
 void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
-    //qDebug() << "Mouse move";
     Curseur c;
     c.x = event->pos().x();
     c.y = event->pos().y();
@@ -141,7 +139,9 @@ void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
 void DrawingArea::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         drawing = false;
+        qDebug() <<"relache "<< drawing;
     }
+    releaseMouse();
 }
 
 void DrawingArea::paintEvent(QPaintEvent *event) {
