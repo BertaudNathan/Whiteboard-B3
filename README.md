@@ -60,7 +60,16 @@ En tant qu’utilisateur je veux pouvoir sauvegarder un tableau afin de le rouvr
 
 En tant qu’utilisateur je veux pouvoir ouvrir un tableau existant afin de travailler sur un projet existant.
 
+## Diagrammes 
 
+Diagramme des classes :
+
+![image diagramme classe](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/diagramme-classes.png?raw=true)
+
+
+Diagramme des interactions client-serveur :
+
+![image diagramme classe](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/interactions.png?raw=true)
 
 
 
