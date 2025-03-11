@@ -51,6 +51,8 @@ private:
     QVector<std::pair<QLine, QPen>> lines;
     Client *client = nullptr;  
     QMap<int, CurseurWidget*> *mapIdCurseur = new QMap<int, CurseurWidget*>(); 
+
+    QMap<int, Curseur> *mapIdPosition = new QMap<int, Curseur>();
     QImage canvas;  // Image tampon contenant le fond + les dessins
     bool backgroundSet = false;  // Vérifier si l’image de fond a déjà été dessinée
 };
@@ -87,8 +89,7 @@ private:
     QComboBox *sizeComboBox;
     QPushButton *colorButton; 
     QPushButton *clearButton;
-    Client *client = nullptr;
-    
+    Client *client = nullptr; 
 };
 
 #endif // BOARD_H

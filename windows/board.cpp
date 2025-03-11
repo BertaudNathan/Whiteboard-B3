@@ -98,6 +98,9 @@ void DrawingArea::incomingData() {
         }
         if (c.drawing == true){
             Draw(c);
+            mapIdPosition->insert(c.id, c);
+        } else {
+            mapIdPosition->remove(c.id);
         }
         widget->move(c.x,c.y);
     }
@@ -121,7 +124,12 @@ void DrawingArea::incomingData() {
 
 void DrawingArea::Draw(Curseur c) {
         QPainter painter(&canvas); // Dessiner directement sur l'image tampon
+
         painter.setPen(QPen(QColor(c.couleur), c.taille, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        if (mapIdPosition->contains(c.id)){
+            Curseur last = mapIdPosition->find(c.id).value();
+            painter.drawLine(QLine(last.x, last.y, c.x, c.y));
+        }
         painter.drawLine(QLine(c.x - 1, c.y - 1, c.x, c.y));
         update(); // Forcer l'affichage sans toucher au fond
     
