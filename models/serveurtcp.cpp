@@ -124,6 +124,7 @@ void ServeurTCP::onClientReadyRead()
         QDataStream stream(&requestData, QIODevice::ReadOnly);
         quint8 type;
         stream >> type; // Désérialisation du type de message
+        qDebug() << "Type de message reçu : " << type;
         if (type == 0x02)
         {
             Curseur c;
@@ -131,43 +132,6 @@ void ServeurTCP::onClientReadyRead()
             broadcastCurseur(c);
             // qDebug() << "Point reçu -> X:" << c.x << ", Y:" << c.y;
         }
-    }
-    else
-    {
-
-         QByteArray requestData = clientSocket->readAll();
-        QDataStream stream(&requestData, QIODevice::ReadOnly);
-        quint8 type;
-        QString passwordTest;
-        stream >> type;
-        stream >> passwordTest;
-        if (clientSocket && type == 0x03)
-        {
-            if (passwordTest == password)
-            {
-                QString response = "Bienvenue !";
-                sendTo(clientSocket->peerAddress().toString(), clientSocket->peerPort(), response.toUtf8());
-                clientSocket->write("Bienvenue !");
-                clientSocket->flush();
-                qDebug() << "mdp valide";
-                clientsValides.append(clientSocket);
-            }
-            else
-            {
-                qDebug() << "mdp incorrect";
-                QString response = "Mot de passe incorrect !";
-                sendTo(clientSocket->peerAddress().toString(), 8001, response.toUtf8());
-                clientSocket->write("Mot de passe incorrect !");
-                clientSocket->flush();
-                clientSocket->disconnectFromHost();
-            }
-            clientSocket->write("Message reçu !");
-            clientSocket->flush();
-        }
-        else
-        {
-            qDebug() << "erreur pas clientSocket";
-        } 
     }
 }
 

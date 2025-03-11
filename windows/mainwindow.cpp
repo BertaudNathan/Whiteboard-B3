@@ -20,22 +20,25 @@ void MainWindow::on_pushButton_3_clicked()
     FormulaireConnexion *form = new FormulaireConnexion(this);
     form->show();
     if (form->exec() == QDialog::Accepted) {
-        qDebug() << "on ferme derriere";
         if (form->getClient()->getSocket()->isOpen()) {
+            this->hide();
             WhiteBoard *board = new WhiteBoard(this, form->getIp());
             board->show(); 
-            hide();
+            board->setAttribute( Qt::WA_DeleteOnClose, true );
+            QObject::connect( board, SIGNAL(destroyed(QObject*)), this, SLOT(show()) );  //in case you want to show the login window again once the window is closed
         }
-    } else {
-        qDebug() << "on ferme pas";
-    }
+    } 
 }
 
 
 void MainWindow::on_pushButton_clicked()
 {
-   Board *board = new Board(this);
+   WhiteBoard *board = new WhiteBoard(this);
    board->show(); 
+            board->setWindowFlags( Qt::Window );
+            board->setAttribute( Qt::WA_DeleteOnClose, true );
+            this->hide();
+            QObject::connect( board, SIGNAL(destroyed(QObject*)), this, SLOT(show()) );
 }
 
 void MainWindow::on_pushButton_2_clicked()

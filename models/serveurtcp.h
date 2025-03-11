@@ -11,6 +11,9 @@
 #include <QDataStream>
 #include <QBuffer>
 
+#include "password.h"
+
+
 
 //Serveur tcp, gere les connexions des clients, le broadcast des données
 class ServeurTCP : public QTcpServer
