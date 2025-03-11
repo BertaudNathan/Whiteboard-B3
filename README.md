@@ -39,4 +39,29 @@ Quand un client reçoit un curseur, il deplace sur le tableau  le curseur corres
 
 ## Interface utilisateur
 
-L'interface consiste en une page principale ou on peut se connecter et heberger, un formulaire de connexion avec des champs ip et mot de passe, un formulaire d'hebergement avec
+L'interface consiste en une page principale ou on peut se connecter et heberger, un formulaire de connexion avec des champs ip et mot de passe, un formulaire d'hebergement avec le nom, le mot de passe et un boutton permettant de choisir un fichier, en ouvrant un explorateur de fichier.
+L'interface de connexion débouche sur la page du tableau, ou l'utilisateur peut dessiner, changer la taille et la couleur, et sauvegarder le tableau, ce qui ouvre également un explorateur de fichier.
+
+## Fonctionnalités non implementées
+
+Le systeme d'information ne présente pas de redondance, ce qui signifie que si le serveur principal s'arrete, tous les clients sont deconnéctés et tout est perdu. La systeme de redondance qui aurait pu etre implémenté est un systeme ou tous les clients ont connaissance des adresses ip connectées, et le client qvec l'identifiant "1" ouvre un nouveau serveur si le premier s'arrete. Tous les autres clients se reconnecteraient ainsi à ce nouveau serveur, qui enverraient ainsi sa version du tableau à tous le monde pour re-synchroniser.
+
+Le check du mot de passe n'est également pour le moment pas implémenté.
+
+## User stories
+
+En tant qu’utilisateur je veux pouvoir créer un tableau afin de dessiner
+
+En tant qu’utilisateur je veux pouvoir ouvrir l'accès à un tableau afin de dessiner avec d’autres utilisateurs.
+
+En tant qu’utilisateur je veux pouvoir rejoindre un tableau afin de dessiner avec d’autres utilisateurs.
+
+En tant qu’utilisateur je veux pouvoir sauvegarder un tableau afin de le rouvrir plus tard.
+
+En tant qu’utilisateur je veux pouvoir ouvrir un tableau existant afin de travailler sur un projet existant.
+
+
+
+
+
+
