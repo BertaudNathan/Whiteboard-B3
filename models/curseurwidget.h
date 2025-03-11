@@ -6,6 +6,8 @@
 #include <QMouseEvent>
 #include <QPixmap>
 
+
+//widget du curseur bougeant sur le canvas
 class CurseurWidget : public QWidget {
     Q_OBJECT
 

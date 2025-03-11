@@ -9,11 +9,14 @@
 #include "../models/client.h"
 #include "../models/curseur.h"
 #include "../models/point.h"
+#include "../models/image.h"
 #include "../models/password.h"
 #include "../models/curseurwidget.h"
 #include "../models/idClient.h"
 #include "../models/logHelper.h"
 
+
+// Classe représentant la zone de dessin, gere le canvas du dessin en lui meme
 class DrawingArea : public QWidget {
     Q_OBJECT
 
@@ -49,6 +52,8 @@ private:
     QVector<std::pair<QLine, QPen>> lines;
     Client *client = nullptr;  
     QMap<int, CurseurWidget*> *mapIdCurseur = new QMap<int, CurseurWidget*>(); 
+    QImage canvas;  // Image tampon contenant le fond + les dessins
+    bool backgroundSet = false;  // Vérifier si l’image de fond a déjà été dessinée
 };
 
 
@@ -57,6 +62,7 @@ class QHBoxLayout;
 class QComboBox;
 class QPushButton;
 
+// Classe représentant la board, gere le canvas drawingSurface et les diffents controles du stylo
 class Board : public QWidget {
     Q_OBJECT
 

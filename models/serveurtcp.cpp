@@ -6,9 +6,21 @@ void ServeurTCP::setPassword(const QString &newPassword)
 {
     this->password = newPassword;
 }
-
-ServeurTCP::ServeurTCP(QObject *parent) : QTcpServer(parent)
+ServeurTCP::ServeurTCP(QObject *parent, QString imagePath) : QTcpServer(parent)
 {
+    qDebug() << "📂 Chemin de l'image reçu :" << imagePath;
+    
+    if (!QFile::exists(imagePath)) {
+        qDebug() << "❌ L'image n'existe pas !";
+    } else {
+        this->image = QImage(imagePath);
+        if (this->image.isNull()) {
+            qDebug() << "⚠️ Échec du chargement de l'image !";
+        } else {
+            qDebug() << "✅ Image chargée avec succès - Taille :" << this->image.size();
+        }
+    }
+
     this->isAdmin = false;
     this->order = 1;
 }
@@ -107,6 +119,7 @@ void ServeurTCP::incomingConnection(qintptr socketDescriptor)
     {
         IdClient idc;
         idc.id = clients.size() + 1;
+        idc.image = this->image;
         clients.append(clientSocket);
         LogHelper::WriteLog("Nouveau client connecté !");
         QByteArray data;
@@ -114,7 +127,7 @@ void ServeurTCP::incomingConnection(qintptr socketDescriptor)
         quint8 type = 0x05;
         stream << type << idc;
         clientSocket->write(data);
-        clientSocket->flush();
+        clientSocket->flush();     
     }
     else
     {

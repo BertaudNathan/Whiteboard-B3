@@ -14,13 +14,14 @@
 #include "../models/logHelper.h"
 #include "../models/serveurtcp.h"
 #include "../models/client.h"
-#include "test.h"
 #include "board.h"
 
 namespace Ui {
 class FormulaireConnexion;
 }
 
+
+//formulaire de connexion permettant la saisie de l'ip et du mot de passe
 class FormulaireConnexion : public QDialog
 {
     Q_OBJECT

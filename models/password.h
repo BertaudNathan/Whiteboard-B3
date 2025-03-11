@@ -4,6 +4,9 @@
 #include <QString>
 #include <QDataStream>
 
+
+
+//envoie un password pour l'authentification
 struct Password {
     QString password;
 

@@ -2,5 +2,6 @@
 <qresource>
     <file alias="cursor.png">images/cursor.png</file>
     <file alias="cursor.bmp">images/cursor.bmp</file>
+    <file alias="fond.png">images/fond.png</file>
 </qresource>
 </RCC>

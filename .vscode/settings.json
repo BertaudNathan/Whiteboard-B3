@@ -5,6 +5,7 @@
         "*.dbclient-js": "javascript",
         "*.embeddedhtml": "html",
         "qtcpserver": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "qfiledialog": "cpp"
     }
 }

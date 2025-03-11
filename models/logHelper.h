@@ -6,6 +6,8 @@
 #include <string>
 #include <iomanip>
 
+
+//permet d'ecrire des logs
 class LogHelper {
 public:
     static void WriteLog(const std::string& message);

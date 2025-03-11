@@ -13,7 +13,17 @@ DrawingArea::DrawingArea(QWidget *parent)
     : QWidget(parent), penColor(Qt::black), penSize(5), drawing(false) {
     setStyleSheet("background-color: white;");
     setFixedSize(700, 500);
-    setMouseTracking(true);
+    setMouseTracking(true); 
+
+   /*canvas = QImage(size(), QImage::Format_ARGB32);
+    canvas.fill(Qt::transparent); // Fond transparent pour ne pas effacer
+
+    QPixmap background(":test.jpg");
+    QPainter painter(&canvas);
+    painter.drawPixmap(0, 0, width(), height(), background);
+
+    backgroundSet = true; // Ne plus redessiner le fond
+    */ 
     }
 
 
@@ -82,6 +92,7 @@ void DrawingArea::incomingData() {
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint8 type;
     stream >> type; // Désérialisation du type de message
+    qDebug() << "Type de message reçu : " << type;
     if (type ==0x02){
         Curseur c;
         stream >> c;  // Désérialisation du Curseur
@@ -106,15 +117,24 @@ void DrawingArea::incomingData() {
         Client *client = this->getClient();
         client->setId(idC.id);
         AddCursorWidget(idC.id);
+        canvas = QImage(size(), QImage::Format_ARGB32);
+            canvas.fill(Qt::transparent); // Fond transparent pour éviter d'écraser le dessin
+
+            QPixmap background = QPixmap::fromImage(idC.image);
+            QPainter painter(&canvas);
+            painter.drawPixmap(0, 0, width(), height(), background);
+    
+            backgroundSet = true; // Ne plus redessiner le fond
+            update();
     }
 }
 
 void DrawingArea::Draw(Curseur c) {
-    lines.append(std::make_pair(
-            QLine(c.x-1,c.y-1 , c.x,c.y ),
-            QPen(QColor(c.couleur), c.taille, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin)
-            ));
-    QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
+        QPainter painter(&canvas); // Dessiner directement sur l'image tampon
+        painter.setPen(QPen(QColor(c.couleur), c.taille, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        painter.drawLine(QLine(c.x - 1, c.y - 1, c.x, c.y));
+        update(); // Forcer l'affichage sans toucher au fond
+    
 }
 
 void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
@@ -146,11 +166,10 @@ void DrawingArea::mouseReleaseEvent(QMouseEvent *event) {
 
 void DrawingArea::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.fillRect(rect(), Qt::white);
-
+    painter.drawImage(0, 0, canvas); // Toujours afficher le canvas
     for (const auto &line : lines) {
-        painter.setPen(line.second);  
-        painter.drawLine(line.first); 
+        painter.setPen(line.second);
+        painter.drawLine(line.first);
     }
 }
 
@@ -198,6 +217,7 @@ void Board::initializeUI() {
     mainLayout->addLayout(controlsLayout);
     mainLayout->addWidget(drawingArea, 0, Qt::AlignCenter);
 
+    
     connect(sizeComboBox, &QComboBox::currentTextChanged, this, &Board::changeBrushSize);
     connect(colorButton, &QPushButton::clicked, this, &Board::changeColor);
     connect(clearButton, &QPushButton::clicked, this, &Board::clearBoard);

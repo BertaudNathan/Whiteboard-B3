@@ -40,9 +40,6 @@ set(PROJECT_SOURCES
     models/password.h
     models/curseurwidget.h
     models/curseurwidget.cpp
-    windows/test.cpp
-    windows/test.h
-    windows/test.ui
     windows/board.cpp
     windows/board.h
     resources.qrc

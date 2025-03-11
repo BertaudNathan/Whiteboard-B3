@@ -5,6 +5,8 @@
 #include <QDataStream>
 using namespace std;
 
+
+// Represente le deplacement d'un curseur, en indiquant si le deplacement est dessiné ou non 
 struct Curseur {
     int x;
     int y;

@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDataStream>
 
+
 struct Point {
     int x;
     int y;

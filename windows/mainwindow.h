@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "formulairehebergement.h"
 #include "formulaireconnexion.h"
-#include "test.h"
 #include "board.h"
 
 QT_BEGIN_NAMESPACE
@@ -13,6 +12,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+//permet d'acceder au differents formulaires de connexion et d'hebergement
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

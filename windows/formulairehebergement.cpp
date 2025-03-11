@@ -7,6 +7,7 @@ FormulaireHebergement::FormulaireHebergement(QWidget *parent)
     , ui(new Ui::FormulaireHebergement)
 {
     ui->setupUi(this);
+    connect(ui->buttonOuvrirImage, &QPushButton::clicked, this, &FormulaireHebergement::on_FileOpen);
 }
 
 FormulaireHebergement::~FormulaireHebergement()
@@ -14,13 +15,33 @@ FormulaireHebergement::~FormulaireHebergement()
     delete ui;
 }
 
+QString FormulaireHebergement::getImage() const
+{
+    return image;
+}
+
+void FormulaireHebergement::on_FileOpen()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(),
+                                                    tr("Images (*.png *.jpg)"));
+    if (!fileName.isEmpty()) {
+        this->image = fileName; 
+        ui->inputNomTableau->setText(fileName);
+    }
+}
+
 void FormulaireHebergement::on_buttonBox_accepted()
 {
     QString ip = ui->inputNomTableau->text();
     QString password = ui->inputPasswordTableau->text();
     LogHelper::WriteLog("IP " + ip.toStdString()+ " PORT " + password.toStdString());
-    server = new ServeurTCP(this);
+    if (!QFile::exists(this->image)) {
+        this->image =  ":fond.png";
+    }
+    server = new ServeurTCP(this, this->image);
     server->setPassword(password);
     server->startServer(8000);
 }
+
+
 

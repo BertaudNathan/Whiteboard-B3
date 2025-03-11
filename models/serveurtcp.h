@@ -7,13 +7,20 @@
 #include "point.h"
 #include "curseur.h"
 #include "idClient.h"
+#include "image.h"
+#include <QImage>
+#include <QFile>
+#include <QDataStream>
+#include <QBuffer>
 
+
+//Serveur tcp, gere les connexions des clients, le broadcast des données
 class ServeurTCP : public QTcpServer
 {
     Q_OBJECT
 
 public:
-    explicit ServeurTCP(QObject *parent = nullptr);
+    explicit ServeurTCP(QObject *parent, QString imagePath);
     explicit ServeurTCP(bool isAdmin, QObject *parent = nullptr);
     ~ServeurTCP();
     
@@ -38,6 +45,7 @@ private:
     QList<QTcpSocket *> clientsValides;
     bool isAdmin;
     QString password;
+    QImage image;
     int order;
 
 };
