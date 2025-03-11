@@ -21,12 +21,14 @@ void MainWindow::on_pushButton_3_clicked()
     FormulaireConnexion *form = new FormulaireConnexion(this);
     form->show();
     if (form->exec() == QDialog::Accepted) {
-        if (form->getClient()->getSocket()->isOpen()) {
+        if (form->getClient()->getSocket()->state() == QAbstractSocket::ConnectedState) {
             this->hide();
             WhiteBoard *board = new WhiteBoard(this, form->getIp());
             board->show(); 
             board->setAttribute( Qt::WA_DeleteOnClose, true );
             QObject::connect( board, SIGNAL(destroyed(QObject*)), this, SLOT(show()) ); 
+        } else{
+            QMessageBox::warning(this, "Erreur", "Impossible de se connecter au serveur");
         }
     } 
 }
