@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>WhiteBoard</class>
+ <widget class="QMainWindow" name="WhiteBoard">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,43 +13,15 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="whatsThis">
+   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;QDialog&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
-      </property>
-      <item>
-       <widget class="QPushButton" name="buttonRectangle">
-        <property name="text">
-         <string>rectangle</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonEraser">
-        <property name="text">
-         <string>Eraser</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonPen">
-        <property name="text">
-         <string>Pencil</string>
-        </property>
-        <property name="icon">
-         <iconset theme="QIcon::ThemeIcon::MailMessageNew"/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="Board" name="widget" native="true">
+       <widget class="QWidget" name="boardContainer" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -70,13 +42,6 @@
          <widget class="QPushButton" name="buttonSave">
           <property name="text">
            <string>S</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="buttonQuit">
-          <property name="text">
-           <string>D</string>
           </property>
          </widget>
         </item>
@@ -105,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>914</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

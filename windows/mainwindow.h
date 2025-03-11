@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include "formulairehebergement.h"
 #include "formulaireconnexion.h"
-#include "board.h"
+#include "whiteboard.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

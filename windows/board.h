@@ -72,6 +72,7 @@ class Board : public QWidget {
 public:
     explicit Board(QWidget *parent = nullptr, QString ip = nullptr);
     ~Board();
+    DrawingArea *getDrawingArea() const;
     
 
 private slots:

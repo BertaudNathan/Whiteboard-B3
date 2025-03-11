@@ -122,6 +122,8 @@ void DrawingArea::incomingData() {
     }
 }
 
+
+
 void DrawingArea::Draw(Curseur c) {
         QPainter painter(&canvas); // Dessiner directement sur l'image tampon
 
@@ -238,4 +240,8 @@ void Board::changeColor() {
 
 void Board::clearBoard() {
     drawingArea->clearCanvas();
+}
+
+DrawingArea *Board::getDrawingArea() const{
+    return drawingArea;
 }

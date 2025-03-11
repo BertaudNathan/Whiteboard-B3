@@ -41,6 +41,9 @@ set(PROJECT_SOURCES
     models/curseurwidget.cpp
     windows/board.cpp
     windows/board.h
+    windows/whiteboard.cpp
+    windows/whiteboard.h
+    windows/whiteboard.ui
     resources.qrc
 
     ${TS_FILES}
