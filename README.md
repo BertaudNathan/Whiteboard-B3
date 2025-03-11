@@ -1,4 +1,5 @@
-#Documentation Whiteboard-B3
+# Documentation Whiteboard-B3
+# Par Bertaud Nathan, Swan Breton, Louis Colombel, Bamody Doumbia
 
 
 ## Objectif
@@ -61,6 +62,24 @@ En tant qu’utilisateur je veux pouvoir sauvegarder un tableau afin de le rouvr
 En tant qu’utilisateur je veux pouvoir ouvrir un tableau existant afin de travailler sur un projet existant.
 
 
+## Gestion de projet
+
+Pour la gestion de projet, nous avons utilisé Trello, pour séparer les taches de manière a avoir une idée claire du travail a fournir. Le travail a été séparées en sous taches par domaines, avec le temps estimés pour chacune d'entre elles.
+Chaque tâche est soit dans la colonne "A reflechir", "A faire", "En cours" ou "Fini".
+
+## Diagrammes 
+
+Diagramme des classes :
+
+![image diagramme classe](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/diagramme-classes.png?raw=true)
+
+
+Diagramme des interactions client-serveur :
+
+![image diagramme classe](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/interactions.png?raw=true)
+
+
+## images de l'application
 
 
 
