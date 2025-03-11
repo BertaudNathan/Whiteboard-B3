@@ -43,25 +43,6 @@ void ServeurTCP::startServer(quint16 port)
     }
 }
 
-void ServeurTCP::broadcastPoint(const Point &p)
-{
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    quint8 type = 0x01;  // Identifiant pour Point
-    stream << type << p; // Sérialiser le Point
-
-    for (QTcpSocket *client : clients)
-    {
-        if (client->state() == QAbstractSocket::ConnectedState)
-        {
-            client->write(data);
-            client->flush();
-        }
-    }
-
-    // qDebug() << "Diffusion du point à tous les clients.";
-}
 
 void ServeurTCP::broadcastCurseur(const Curseur &c)
 {
@@ -75,8 +56,7 @@ void ServeurTCP::broadcastCurseur(const Curseur &c)
         if (client->state() == QAbstractSocket::ConnectedState)
         {
             client->write(data);
-            client->flush();
-            //qDebug() << "Diffusion du curseur à " << client->peerAddress().toString() << ":" << client->peerPort();
+            client->flush();   
         }
     }
 }
@@ -144,14 +124,7 @@ void ServeurTCP::onClientReadyRead()
         QDataStream stream(&requestData, QIODevice::ReadOnly);
         quint8 type;
         stream >> type; // Désérialisation du type de message
-        if (type == 0x01)
-        {
-            Point p;
-            stream >> p; // Désérialisation du Point
-            broadcastPoint(p);
-            // qDebug() << "Point reçu -> X:" << p.x << ", Y:" << p.y << ", Couleur:" << p.couleur << ", Taille:" << p.taille;
-        }
-        else if (type == 0x02)
+        if (type == 0x02)
         {
             Curseur c;
             stream >> c; // Désérialisation du Curseur
@@ -162,7 +135,7 @@ void ServeurTCP::onClientReadyRead()
     else
     {
 
-        /* QByteArray requestData = clientSocket->readAll();
+         QByteArray requestData = clientSocket->readAll();
         QDataStream stream(&requestData, QIODevice::ReadOnly);
         quint8 type;
         QString passwordTest;
@@ -194,7 +167,7 @@ void ServeurTCP::onClientReadyRead()
         else
         {
             qDebug() << "erreur pas clientSocket";
-        } */
+        } 
     }
 }
 

@@ -34,7 +34,6 @@ set(PROJECT_SOURCES
     models/serveurtcp.cpp
     models/client.h
     models/client.cpp
-    models/point.h
     models/curseur.h
     models/idClient.h
     models/password.h

@@ -14,16 +14,6 @@ DrawingArea::DrawingArea(QWidget *parent)
     setStyleSheet("background-color: white;");
     setFixedSize(700, 500);
     setMouseTracking(true); 
-
-   /*canvas = QImage(size(), QImage::Format_ARGB32);
-    canvas.fill(Qt::transparent); // Fond transparent pour ne pas effacer
-
-    QPixmap background(":test.jpg");
-    QPainter painter(&canvas);
-    painter.drawPixmap(0, 0, width(), height(), background);
-
-    backgroundSet = true; // Ne plus redessiner le fond
-    */ 
     }
 
 
@@ -91,7 +81,7 @@ void DrawingArea::incomingData() {
     QByteArray data = this->getClient()->getSocket()->readAll();
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint8 type;
-    stream >> type; // Désérialisation du type de message
+    stream >> type;
     qDebug() << "Type de message reçu : " << type;
     if (type ==0x02){
         Curseur c;
@@ -118,13 +108,13 @@ void DrawingArea::incomingData() {
         client->setId(idC.id);
         AddCursorWidget(idC.id);
         canvas = QImage(size(), QImage::Format_ARGB32);
-            canvas.fill(Qt::transparent); // Fond transparent pour éviter d'écraser le dessin
+            canvas.fill(Qt::transparent);
 
             QPixmap background = QPixmap::fromImage(idC.image);
             QPainter painter(&canvas);
             painter.drawPixmap(0, 0, width(), height(), background);
     
-            backgroundSet = true; // Ne plus redessiner le fond
+            backgroundSet = true;
             update();
     }
 }

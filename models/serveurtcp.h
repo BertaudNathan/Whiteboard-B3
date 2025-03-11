@@ -4,10 +4,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QObject>
-#include "point.h"
 #include "curseur.h"
 #include "idClient.h"
-#include "image.h"
 #include <QImage>
 #include <QFile>
 #include <QDataStream>
@@ -30,7 +28,6 @@ public:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
-    void broadcastPoint(const Point &p);
     void broadcastCurseur(const Curseur &c);
 
 private slots:

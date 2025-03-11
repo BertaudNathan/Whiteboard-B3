@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    //FormulaireConnexion w;
     MainWindow w;
     w.show();
     return a.exec();

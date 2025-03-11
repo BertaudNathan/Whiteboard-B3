@@ -8,8 +8,7 @@
 #include <QMap>
 #include "../models/client.h"
 #include "../models/curseur.h"
-#include "../models/point.h"
-#include "../models/image.h"
+
 #include "../models/password.h"
 #include "../models/curseurwidget.h"
 #include "../models/idClient.h"

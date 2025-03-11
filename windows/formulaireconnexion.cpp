@@ -4,26 +4,7 @@
 FormulaireConnexion::FormulaireConnexion(QWidget *parent)
     : QDialog(parent)    , ui(new Ui::FormulaireConnexion)
 {
-    /* QWidget *centralWidget = new QWidget(this);
-   //setCentralWidget(centralWidget); // QDialog does not have setCentralWidget
-    QVBoxLayout *layout = new QVBoxLayout(centralWidget);
-    QLabel *ipLabel = new QLabel("Adresse IP:", this);
-    ipInput = new QLineEdit(this);
-    ipInput->setText("127.0.0.1");
-    QLabel *passwordLabel = new QLabel("Mot de passe:", this);
-    passwordInput = new QLineEdit(this);
-    passwordInput->setEchoMode(QLineEdit::Password);
-
-    submitButton = new QPushButton("Valider", this);
-
-    layout->addWidget(ipLabel);
-    layout->addWidget(ipInput);
-    layout->addWidget(passwordLabel);
-    layout->addWidget(passwordInput);
-    layout->addWidget(submitButton);
-    setLayout(layout); */
     ui->setupUi(this);
-
 }
 
 FormulaireConnexion::~FormulaireConnexion()

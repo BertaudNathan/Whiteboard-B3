@@ -5,9 +5,10 @@
 #include <QObject>
 #include <QDebug>
 
-#include "point.h"
 #include "curseur.h"
 #include "idClient.h"
+
+// Classe représentant un client, gère la connexion au serveur, la reception de message connectée au board grace a un emitter
 class Client : public QObject
 {
     Q_OBJECT
