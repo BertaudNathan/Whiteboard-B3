@@ -53,8 +53,8 @@ private:
     QMap<int, CurseurWidget*> *mapIdCurseur = new QMap<int, CurseurWidget*>(); 
 
     QMap<int, Curseur> *mapIdPosition = new QMap<int, Curseur>();
-    QImage canvas;  // Image tampon contenant le fond + les dessins
-    bool backgroundSet = false;  // Vérifier si l’image de fond a déjà été dessinée
+    QImage canvas;
+    bool backgroundSet = false;
 };
 
 

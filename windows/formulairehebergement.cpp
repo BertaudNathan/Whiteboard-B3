@@ -7,6 +7,7 @@ FormulaireHebergement::FormulaireHebergement(QWidget *parent)
     , ui(new Ui::FormulaireHebergement)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Heberger un whiteboard");
     connect(ui->buttonOuvrirImage, &QPushButton::clicked, this, &FormulaireHebergement::on_FileOpen);
 }
 

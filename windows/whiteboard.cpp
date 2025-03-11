@@ -6,7 +6,7 @@ WhiteBoard::WhiteBoard(QWidget *parent, QString ip) : QMainWindow(parent)
 {
 
     ui->setupUi(this);
-
+    this->setWindowTitle("Whiteboard");
 
     QWidget *container = ui->boardContainer;
 

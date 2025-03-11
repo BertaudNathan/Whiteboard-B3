@@ -69,12 +69,8 @@ void DrawingArea::mousePressEvent(QMouseEvent *event) {
         stream << type;  
         stream << p;
         Draw(p);
-        qDebug() <<"appuye "<< drawing;
         this->getClient()->sendMessage(data);
-    } else {
-        qDebug() << "erereerfeafe";
-    }
-    
+    } 
 }
 
 void DrawingArea::incomingData() {
@@ -82,11 +78,9 @@ void DrawingArea::incomingData() {
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint8 type;
     stream >> type;
-    qDebug() << "Type de message reçu : " << type;
     if (type ==0x02){
         Curseur c;
-        stream >> c;  // Désérialisation du Curseur
-
+        stream >> c; 
         CurseurWidget *widget;
         if (mapIdCurseur->contains(c.id)){
             widget = mapIdCurseur->find(c.id).value();
@@ -159,7 +153,6 @@ void DrawingArea::mouseMoveEvent(QMouseEvent *event) {
 void DrawingArea::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         drawing = false;
-        qDebug() <<"relache "<< drawing;
     }
     releaseMouse();
 }

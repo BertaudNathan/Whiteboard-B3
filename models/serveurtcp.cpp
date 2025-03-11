@@ -8,17 +8,10 @@ void ServeurTCP::setPassword(const QString &newPassword)
 }
 ServeurTCP::ServeurTCP(QObject *parent, QString imagePath) : QTcpServer(parent)
 {
-    qDebug() << "📂 Chemin de l'image reçu :" << imagePath;
     
-    if (!QFile::exists(imagePath)) {
-        qDebug() << "❌ L'image n'existe pas !";
-    } else {
-        this->image = QImage(imagePath);
-        if (this->image.isNull()) {
-            qDebug() << "⚠️ Échec du chargement de l'image !";
-        } else {
-            qDebug() << "✅ Image chargée avec succès - Taille :" << this->image.size();
-        }
+    
+    if (QFile::exists(imagePath)) {
+        this->image = QImage(imagePath); 
     }
 
     this->isAdmin = false;
@@ -124,26 +117,17 @@ void ServeurTCP::onClientReadyRead()
         QDataStream stream(&requestData, QIODevice::ReadOnly);
         quint8 type;
         stream >> type; // Désérialisation du type de message
-        qDebug() << "Type de message reçu : " << type;
         if (type == 0x02)
         {
             Curseur c;
             stream >> c; // Désérialisation du Curseur
             broadcastCurseur(c);
-            // qDebug() << "Point reçu -> X:" << c.x << ", Y:" << c.y;
         }
     }
 }
 
 void ServeurTCP::receiveRequest(QTcpSocket *clientSocket)
 {
-    QByteArray requestData = clientSocket->readAll();
-
-    // Exemple de réponse
-    QString response = "Requête reçue et traitée";
-    clientSocket->write(response.toUtf8());
-    sendTo(clientSocket->peerAddress().toString(), clientSocket->peerPort(), response.toUtf8());
-    clientSocket->flush();
 }
 
 void ServeurTCP::onClientDisconnected()

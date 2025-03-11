@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Whiteboard");
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +26,7 @@ void MainWindow::on_pushButton_3_clicked()
             WhiteBoard *board = new WhiteBoard(this, form->getIp());
             board->show(); 
             board->setAttribute( Qt::WA_DeleteOnClose, true );
-            QObject::connect( board, SIGNAL(destroyed(QObject*)), this, SLOT(show()) );  //in case you want to show the login window again once the window is closed
+            QObject::connect( board, SIGNAL(destroyed(QObject*)), this, SLOT(show()) ); 
         }
     } 
 }

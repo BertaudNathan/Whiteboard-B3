@@ -9,6 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon(":icon"));
     a.setStyleSheet(R"(
         QWidget {
             background-color: #f0f0f0;
@@ -32,7 +33,6 @@ int main(int argc, char *argv[])
         }
     )");
     
-    qDebug() << "Test de qDebug";
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {

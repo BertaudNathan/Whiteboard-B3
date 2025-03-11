@@ -20,7 +20,7 @@ Client::~Client()
 
 void Client::connectToServer(const QString &ip, quint16 port)
 {
-    //qDebug() << "Connexion au serveur sur" << ip << ":" << port;
+    
     socket->connectToHost(ip, port);
 }
 
@@ -34,20 +34,20 @@ void Client::sendMessage(const QByteArray &message)
     }
     qint64 bytesWritten = this->socket->write(message);
     if (bytesWritten == -1) {
-        qDebug() << "ERREUR: Échec d'envoi du message !";
+        
     } else {
-        //qDebug() << "Message envoyé avec succès (" << bytesWritten << " octets ):" << message;
+        
     }
 }
 
 void Client::onConnected()
 {
-    qDebug() << "Connecté au serveur.";
+    
 }
 
 void Client::onDisconnected()
 {
-    qDebug() << "Déconnecté du serveur.";
+    
 }
 
 void Client::onReadyRead()
@@ -56,7 +56,7 @@ void Client::onReadyRead()
 
 void Client::onErrorOccurred(QAbstractSocket::SocketError socketError)
 {
-    qDebug() << "Erreur de connexion:" << socket->errorString();
+    LogHelper::WriteLog(socket->errorString().toStdString());
 }
 
 QTcpSocket *Client::getSocket() const
