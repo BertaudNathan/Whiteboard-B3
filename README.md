@@ -76,11 +76,28 @@ Diagramme des classes :
 
 Diagramme des interactions client-serveur :
 
-![image diagramme classe](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/interactions.png?raw=true)
+![image diagramme interactions](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/interactions.png?raw=true)
 
 
 ## images de l'application
 
+menu principal :
+![image menu principal](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/menu.png?raw=true)
+
+formulaire hebergement :
+![image menu principal](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/formulaire-hebergement.png?raw=true)
+
+
+formulaire connexion :
+![image menu principal](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/formulaire-connexion.png?raw=true)
+
+
+ecran tableau :
+![image menu principal](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/whiteboard.png?raw=true)
+
+
+ecran tableau avec image :
+![image menu principal](https://github.com/BertaudNathan/Whiteboard-B3/blob/main/documentation/whiteboard-image.png?raw=true)
 
 
 
